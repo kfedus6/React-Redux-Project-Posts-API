@@ -1,10 +1,23 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux'
 
-const App = () => {
+import './App.css';
+import { getPosts as getPostsAction } from './redux/modules/posts';
+
+const App = ({ posts, getPosts }) => {
+
+   useEffect(() => {
+      console.log('1')
+      getPosts()
+      console.log(posts)
+   }, [])
+
    return (
-      <div>app</div>
+      <div>Post</div>
    )
 }
 
-export default App;
+export default connect(
+   ({ posts }) => ({ posts: posts.posts }),
+   { getPosts: getPostsAction }
+)(App);
