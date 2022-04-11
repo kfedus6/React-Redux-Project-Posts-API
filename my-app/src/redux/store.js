@@ -1,11 +1,13 @@
-import { createStore, combineReducers } from 'redux';
-
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk'
+import reduxLogger from 'redux-logger'
 import rootReducers from './modules'
 
-const configureStore = (reducers = {}, preLoadedState = {}) => {
+const configureStore = (reducers = {}, preLoadedState = {}, middlewares = []) => {
    return createStore(
       combineReducers({ ...reducers, ...rootReducers }),
-      preLoadedState
+      preLoadedState,
+      compose(applyMiddleware(...middlewares, thunk, reduxLogger))
    )
 }
 
