@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const GET_POSTS = 'posts/GET_POSTS'
 const CREATE_POST = 'posts/CREATE_POST'
+const REMOVE_POST = 'posts/REMOVE_POST'
 
 const defaultState = {
    posts: []
@@ -16,6 +17,9 @@ export default (state = defaultState, { type, payload }) => {
       }
       case CREATE_POST: {
          return { ...state, posts: [...state.posts, payload] }
+      }
+      case REMOVE_POST: {
+         return { ...state, posts: payload }
       }
       default: {
          console.log('reducer default')
@@ -51,4 +55,8 @@ export const createPost = (title, body) => {
          .then((response) => response.json())
          .then((data) => dispatch({ type: CREATE_POST, payload: data }));
    }
+}
+
+export const removePost = (posts) => async (dispatch) => {
+   dispatch({ type: REMOVE_POST, payload: posts })
 }
