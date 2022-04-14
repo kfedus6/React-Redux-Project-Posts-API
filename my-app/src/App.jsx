@@ -9,7 +9,6 @@ import { getPosts as getPostsAction } from './redux/modules/posts';
 const App = ({ posts, getPosts }) => {
 
    useEffect(() => {
-      console.log('useEfct')
       getPosts()
    }, [])
 
