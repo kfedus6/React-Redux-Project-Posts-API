@@ -64,9 +64,5 @@ export const removePost = (id) => async (dispatch) => {
    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
       method: 'DELETE',
    })
-      .then(response => { return response.json() })
-      .then(data => dispatch({ type: REMOVE_POST, payload: id }))
-   //
+   dispatch({ type: REMOVE_POST, payload: id })
 }
-
-/*   let newPosts = posts.filter(p => p.id !== post.id) */

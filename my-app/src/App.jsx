@@ -1,30 +1,29 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import './App.css';
 import PostFrom from './Components/PostFrom';
 import PostsList from './Components/PostsList';
 import { getPosts as getPostsAction } from './redux/modules/posts';
 
-const App = ({ posts, getPosts }) => {
+const App = () => {
+
+   const dispatch = useDispatch();
 
    useEffect(() => {
-      getPosts()
+      dispatch(getPostsAction())
    }, [])
 
    return (
       <div className='app'>
          {console.log('return')}
          <PostFrom />
-         <PostsList posts={posts} />
+         <PostsList />
       </div>
    )
 }
 
-export default connect(
-   ({ posts }) => ({ posts: posts.posts }),
-   { getPosts: getPostsAction }
-)(App);
+export default App;
 
 /*
 const mapStateTopProps = (state) => {

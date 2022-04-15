@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { createPost as createPostAction } from '../redux/modules/posts';
-import { connect } from 'react-redux';
 
-const PostFrom = ({ createPost }) => {
+const PostFrom = () => {
    const [title, setTitle] = useState('');
    const [body, setBody] = useState('');
 
+   const dispatch = useDispatch();
+
    const newPost = (e) => {
       e.preventDefault();
-      createPost(title, body);
+      dispatch(createPostAction(title, body));
    }
 
    return (
@@ -28,9 +30,4 @@ const PostFrom = ({ createPost }) => {
    )
 }
 
-export default connect(
-   null,
-   {
-      createPost: createPostAction
-   }
-)(PostFrom);
+export default PostFrom;

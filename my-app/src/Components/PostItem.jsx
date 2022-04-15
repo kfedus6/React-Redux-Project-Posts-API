@@ -1,11 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { removePost as removePostAction } from '../redux/modules/posts';
 
-const PostItem = ({ posts, removePost, post, }) => {
+const PostItem = ({ post }) => {
+
+   const dispatch = useDispatch();
 
    const deletePost = (post) => {
-      removePost(post.id)
+      dispatch(removePostAction(post.id))
    }
 
    return (
@@ -23,8 +25,5 @@ const PostItem = ({ posts, removePost, post, }) => {
    )
 }
 
-export default connect(
-   ({ posts }) => ({ posts: posts.posts }),
-   { removePost: removePostAction }
-)(PostItem);
+export default PostItem;
 
