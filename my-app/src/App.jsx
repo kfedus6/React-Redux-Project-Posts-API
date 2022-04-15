@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 
 import './App.css';
 import PostFrom from './Components/PostFrom';

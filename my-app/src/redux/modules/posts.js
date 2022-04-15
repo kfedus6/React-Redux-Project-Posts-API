@@ -5,7 +5,9 @@ const CREATE_POST = 'posts/CREATE_POST'
 const REMOVE_POST = 'posts/REMOVE_POST'
 
 const defaultState = {
-   posts: []
+   posts: [],
+   loading: false,
+   error: null
 }
 
 //reducer
@@ -19,10 +21,11 @@ export default (state = defaultState, { type, payload }) => {
          return { ...state, posts: [...state.posts, payload] }
       }
       case REMOVE_POST: {
-         return { ...state, posts: payload }
+         return { ...state, posts: state.posts.filter(p => p.id !== payload) }
       }
       default: {
          console.log('reducer default')
+         console.log(state)
          return state
       }
    }
@@ -57,6 +60,13 @@ export const createPost = (title, body) => {
    }
 }
 
-export const removePost = (posts) => async (dispatch) => {
-   dispatch({ type: REMOVE_POST, payload: posts })
+export const removePost = (id) => async (dispatch) => {
+   fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+      method: 'DELETE',
+   })
+      .then(response => { return response.json() })
+      .then(data => dispatch({ type: REMOVE_POST, payload: id }))
+   //
 }
+
+/*   let newPosts = posts.filter(p => p.id !== post.id) */
