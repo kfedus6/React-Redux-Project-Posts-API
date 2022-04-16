@@ -14,7 +14,6 @@ const defaultState = {
 export default (state = defaultState, { type, payload }) => {
    switch (type) {
       case GET_POSTS: {
-         state.loading = true
          return { ...state, posts: payload }
       }
       case CREATE_POST: {
