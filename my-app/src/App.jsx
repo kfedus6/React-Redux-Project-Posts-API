@@ -4,13 +4,13 @@ import './App.css';
 import PostFrom from './Components/PostFrom';
 import PostsList from './Components/PostsList';
 import { getPosts as getPostsAction } from './redux/modules/posts';
+import Loader from './Components/UI/Loader';
 
 const App = () => {
 
    const dispatch = useDispatch();
 
-   const loading = useSelector(state => state.posts)
-   console.log(loading.loading)
+   const state = useSelector(state => state.posts)
 
    useEffect(() => {
       dispatch(getPostsAction())
@@ -18,9 +18,8 @@ const App = () => {
 
    return (
       <div className='app'>
-         {console.log('return')}
          <PostFrom />
-         <PostsList />
+         {state.loading ? <Loader /> : <PostsList />}
       </div>
    )
 }

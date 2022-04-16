@@ -14,7 +14,7 @@ const defaultState = {
 export default (state = defaultState, { type, payload }) => {
    switch (type) {
       case GET_POSTS: {
-         console.log('reducer get_post')
+         state.loading = true
          return { ...state, posts: payload }
       }
       case CREATE_POST: {
@@ -24,18 +24,14 @@ export default (state = defaultState, { type, payload }) => {
          return { ...state, posts: state.posts.filter(p => p.id !== payload) }
       }
       default: {
-         console.log('reducer default')
-         console.log(state)
          return state
       }
    }
 }
 
 
-
 //action
 export const getPosts = () => async (dispatch) => {
-   console.log('action getPosts')
    const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
    dispatch({ type: GET_POSTS, payload: response.data })
 }
