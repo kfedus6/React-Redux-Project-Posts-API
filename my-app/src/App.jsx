@@ -1,25 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import PostFrom from './Components/PostFrom';
 import PostsList from './Components/PostsList';
 import { getPosts as getPostsAction } from './redux/modules/posts';
-import Loader from './Components/UI/Loader';
+import Loader from './Components/UI/LoaderPosts/Loader';
+import SearchPosts from './Components/UI/SearchPosts/SearchPosts';
 
 const App = () => {
+   const [search, setSearch] = useState('');
 
    const dispatch = useDispatch();
 
-   const state = useSelector(state => state.posts)
+   const posts = useSelector(state => state.posts)
 
    useEffect(() => {
-      dispatch(getPostsAction())
-   }, [])
+      dispatch(getPostsAction(search))
+   }, [search])
 
    return (
       <div className='app'>
          <PostFrom />
-         {state.loading ? <Loader /> : <PostsList />}
+         <SearchPosts search={search} setSearch={setSearch} />
+         {posts.loading ? <Loader /> : <PostsList />}
       </div>
    )
 }
