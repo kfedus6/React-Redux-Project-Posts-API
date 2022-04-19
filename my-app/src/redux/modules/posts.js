@@ -6,11 +6,13 @@ const GET_POSTS_ERROR = 'posts/GET_POSTS_ERROR';
 const CREATE_POST = 'posts/CREATE_POST';
 const REMOVE_POST = 'posts/REMOVE_POST';
 const SEARCH_POST = 'posts/SEARCH_POST';
+const TITLE_REMOVE = 'posts/TITLE_REMOVE';
 
 const defaultState = {
    posts: [],
    loading: false,
    error: null,
+   remove: false,
 };
 
 //reducer
@@ -29,11 +31,14 @@ export default (state = defaultState, { type, payload }) => {
          return { ...state, posts: [...state.posts, payload] }
       }
       case REMOVE_POST: {
-         return { ...state, posts: state.posts.filter(p => p.id !== payload) }
+         return { ...state, posts: state.posts.filter(p => p.id !== payload), remove: false }
       }
       case SEARCH_POST: {
          state.loading = false;
          return { ...state, posts: state.posts.filter(p => p.title === payload) }
+      }
+      case TITLE_REMOVE: {
+         return { ...state, remove: true }
       }
       default: {
          return state
@@ -55,7 +60,6 @@ export const getPosts = (search) => async (dispatch) => {
          dispatch({ type: GET_POSTS_ERROR, payload: "Произошла ошибка" })
       }
    }
-
 }
 
 
@@ -79,12 +83,11 @@ export const createPost = (title, body) => {
 }
 
 export const removePost = (id) => async (dispatch) => {
+   dispatch({ type: TITLE_REMOVE, payload: null })
    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
       method: 'DELETE',
    })
-   dispatch({ type: REMOVE_POST, payload: id })
+   setTimeout(() => {
+      dispatch({ type: REMOVE_POST, payload: id })
+   }, 2000)
 }
-/* 
-export const searchPost = (search) => (dispatch) => {
-   dispatch({ type: SEARCH_POST, payload: search })
-} */

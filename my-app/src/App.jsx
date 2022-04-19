@@ -22,7 +22,7 @@ const App = () => {
       <div className='app'>
          <PostFrom />
          <SearchPosts search={search} setSearch={setSearch} />
-         {posts.loading ? <Loader /> : <PostsList />}
+         {posts.loading ? <Loader /> : posts.remove ? <h1>Видиляється пост...</h1> : <PostsList />}
       </div>
    )
 }
