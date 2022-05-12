@@ -33,10 +33,6 @@ export default (state = defaultState, { type, payload }) => {
       case REMOVE_POST: {
          return { ...state, posts: state.posts.filter(p => p.id !== payload), remove: false }
       }
-      case SEARCH_POST: {
-         state.loading = false;
-         return { ...state, posts: state.posts.filter(p => p.title === payload) }
-      }
       case TITLE_REMOVE: {
          return { ...state, remove: true }
       }
@@ -48,17 +44,15 @@ export default (state = defaultState, { type, payload }) => {
 
 
 //action
-export const getPosts = (search) => async (dispatch) => {
-   dispatch({ type: GET_POSTS, payload: null })
-   if (search) {
-      dispatch({ type: SEARCH_POST, payload: search })
-   } else {
-      try {
-         const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+export const getPosts = () => async (dispatch) => {
+   dispatch({ type: GET_POSTS })
+   try {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+      setTimeout(() => {
          dispatch({ type: GET_POSTS_SUCCES, payload: response.data })
-      } catch (e) {
-         dispatch({ type: GET_POSTS_ERROR, payload: "Произошла ошибка" })
-      }
+      }, 2000)
+   } catch (err) {
+      dispatch({ type: GET_POSTS_ERROR, payload: err.message })
    }
 }
 

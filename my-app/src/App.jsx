@@ -5,24 +5,21 @@ import PostFrom from './Components/PostFrom';
 import PostsList from './Components/PostsList';
 import { getPosts as getPostsAction } from './redux/modules/posts';
 import Loader from './Components/UI/LoaderPosts/Loader';
-import SearchPosts from './Components/UI/SearchPosts/SearchPosts';
 
 const App = () => {
-   const [search, setSearch] = useState('');
 
    const dispatch = useDispatch();
 
    const posts = useSelector(state => state.posts)
 
    useEffect(() => {
-      dispatch(getPostsAction(search))
-   }, [search])
+      dispatch(getPostsAction())
+   }, [])
 
    return (
       <div className='app'>
          <PostFrom />
-         <SearchPosts search={search} setSearch={setSearch} />
-         {posts.loading ? <Loader /> : posts.remove ? <h1>Видиляється пост...</h1> : <PostsList />}
+         {posts.loading ? <Loader /> : posts.remove ? <h1>Видиляється пост...</h1> : posts.error ? <h1>{posts.error}</h1> : <PostsList />}
       </div>
    )
 }
